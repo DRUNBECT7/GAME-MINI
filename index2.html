@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAME POINT SEDERHANA</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: rgb(37, 4, 107); /* Mengatur latar belakang menjadi hitam */
+            color: rgb(247, 234, 234); /* Mengatur warna teks menjadi putih */
+            display: flex; /* Menggunakan flexbox untuk memusatkan konten */
+            flex-direction: column; /* Mengatur arah flex menjadi kolom */
+            justify-content: center; /* Memusatkan secara horizontal */
+            align-items: center; /* Memusatkan secara vertikal */
+            height: 100vh; /* Mengatur tinggi body agar memenuhi viewport */
+            margin: 0; /* Menghapus margin default */
+            text-align: center; /* Memusatkan teks */
+        }
+        header {
+            background: linear-gradient(135deg, hwb(269 7% 20%), #2575fc); /* Warna gradien untuk header */
+            padding: 20px; /* Memberikan padding pada header */
+            width: 100%; /* Mengatur lebar header menjadi 100% */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Efek bayangan untuk 3D */
+            position: fixed; /* Memperbaiki posisi header di atas */
+            top: 0; /* Menempatkan header di bagian atas */
+            left: 0; /* Menempatkan header di sisi kiri */
+            z-index: 1000; /* Memastikan header berada di atas konten lainnya */
+        }
+        .user-icon {
+            position: relative; /* Untuk posisi dropdown */
+            cursor: pointer; /* Menunjukkan bahwa ini dapat diklik */
+            font-size: 24px; /* Ukuran ikon pengguna */
+            transition: transform 0.3s; /* Efek transisi saat hover */
+            display: inline-block; /* Agar ikon dan dropdown berada dalam satu baris */
+        }
+        .user-icon:hover {
+            transform: scale(1.1); /* Membesarkan ikon saat hover */
+        }
+        .dropdown {
+            display: none; /* Menyembunyikan dropdown secara default */
+            position: absolute; /* Mengatur posisi dropdown */
+            right: 0; /* Menempatkan dropdown di sebelah kanan */
+            background-color: #6a11cb; /* Warna latar belakang dropdown */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Bayangan untuk dropdown */
+            z-index: 1001; /* Memastikan dropdown di atas konten lainnya */
+        }
+        .user-icon:hover .dropdown {
+            display: block; /* Tampilkan dropdown saat hover pada ikon pengguna */
+        }
+        .dropdown a {
+            color: white; /* Warna teks di dropdown */
+            padding: 10px 20px; /* Padding untuk item dropdown */
+            display: block; /* Menampilkan item dropdown sebagai blok */
+            text-decoration: none; /* Menghapus garis bawah */
+        }
+        .dropdown a:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Efek hover untuk item dropdown */
+        }
+        footer {
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Warna gradien untuk footer */
+            padding: 10px; /* Memberikan padding pada footer */
+            width: 100%; /* Mengatur lebar footer menjadi 100% */
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5); /* Efek bayangan untuk 3D */
+            position: fixed; /* Memperbaiki posisi footer di bawah */
+            bottom: 0; /* Menempatkan footer di bagian bawah */
+            left: 0; /* Menempatkan footer di sisi kiri */
+            z-index: 1000; /* Memastikan footer berada di atas konten lainnya */
+        }
+        #game-canvas {
+            margin-top: 80px; /* Memberikan jarak antara header dan kan vas */
+            margin-bottom: 20px; /* Memberikan jarak antara kanvas dan footer */
+        }
+        #restart-button {
+            display: none; /* Sembunyikan tombol saat permainan dimulai */
+            padding: 10px 20px;
+            font-size: 20px; /* Perbaiki kesalahan penulisan di sini */
+            background-color: rgb(147, 39, 234); /* Warna latar belakang tombol */
+            color: white; /* Warna teks tombol */
+            border: none; /* Menghapus border default */
+            border-radius: 5px; /* Membuat sudut tombol melengkung */
+            cursor: pointer; /* Menunjukkan bahwa tombol dapat diklik */
+            margin-top: 20px; /* Jarak atas tombol */
+        }
+        #restart-button:hover {
+            background-color: rgba(149, 5, 238, 0.603); /* Warna saat hover */
+        }
+        .social-icons {
+            margin-top: 10px; /* Memberikan jarak antara teks dan ikon media sosial */
+        }
+        .social-icons a {
+            color: white; /* Warna ikon media sosial */
+            margin: 0 15px; /* Memberikan jarak antar ikon (15px di kiri dan kanan) */
+            font-size: 24px; /* Ukuran ikon media sosial */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Selamat Datang di Game Point Sederhana</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="#home"><i class="fas fa-home"></i> Home </a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#games"><i class="fas fa-gamepad"></i> Games</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Bantuan</a></li>
+                <li class="user-icon" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                    <a href="#"><i class="fas fa-user"></i> User</a>
+                    <div class="dropdown">
+                        <a href="daftar.html">Daftar</a>
+                        <a href="login.html">Login</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <canvas id="game-canvas" width="400" height="400"></canvas>
+    <button id="restart-button">Restart Game</button> <!-- Tombol Restart -->
+    
+    <footer>
+        <p>&copy; 2024-2025 Game Point Sederhana By Rizky Ardiansyah. Semua hak dilindungi</p>
+       
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://telegram.com" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://whatsapp.com" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </footer>
+    
+    <script src="script2.js"></script>
+</body>
+</html>
